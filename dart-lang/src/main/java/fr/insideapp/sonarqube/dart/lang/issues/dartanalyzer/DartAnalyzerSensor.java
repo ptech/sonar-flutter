@@ -68,7 +68,8 @@ public class DartAnalyzerSensor implements Sensor {
 
             DartAnalyzerReportParser parser = new FlutterAnalyzerReportParser();
 
-            if (!output.getAnalyzerMode().equals(AnalyzerExecutable.Mode.FLUTTER)) {
+            if (!output.getAnalyzerMode().equals(AnalyzerExecutable.Mode.FLUTTER)
+                    && !output.getAnalyzerMode().equals(AnalyzerExecutable.Mode.FVM)) {
                 parser = output.getMode().equals(AnalyzerOutput.Mode.MACHINE)
                         ? new DartAnalyzerMachineReportParser() : new DartAnalyzerLegacyReportParser();
             }

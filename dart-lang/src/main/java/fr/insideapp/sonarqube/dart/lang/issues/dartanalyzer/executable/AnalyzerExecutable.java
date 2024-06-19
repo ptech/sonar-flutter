@@ -45,7 +45,8 @@ public abstract class AnalyzerExecutable {
         MANUAL,
         DARTANALYZER,
         DART,
-        FLUTTER;
+        FLUTTER,
+        FVM;
 
         public static final Mode defaultMode = DETECT;
     }
@@ -180,6 +181,8 @@ public abstract class AnalyzerExecutable {
                 return new DartanalyzerAnalyzerExecutable(sensorContext, outputMode);
             case FLUTTER:
                 return new FlutterAnalyzerExecutable(sensorContext, outputMode);
+            case FVM:
+                return new FvmAnalyzerExecutable(sensorContext, outputMode);
             default:
                 throw new IllegalArgumentException("Could not determine a valid analyzer executable");
         }
@@ -200,7 +203,7 @@ public abstract class AnalyzerExecutable {
      * @return the output mode
      */
     private static AnalyzerOutput.Mode detectOutputMode(SensorContext sensorContext, AnalyzerExecutable.Mode mode) {
-        if (mode.equals(AnalyzerExecutable.Mode.FLUTTER)) {
+        if (mode.equals(AnalyzerExecutable.Mode.FLUTTER) || mode.equals(AnalyzerExecutable.Mode.FVM)) {
             // Flutter does not yet support --format=machine
             LOGGER.debug("Flutter project does not support machine mode yet, defaulting to legacy mode.");
             return AnalyzerOutput.Mode.LEGACY;
